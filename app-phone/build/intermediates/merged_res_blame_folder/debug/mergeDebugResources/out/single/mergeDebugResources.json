@@ -1,0 +1,6 @@
+[
+    {
+        "merged": "com.crewcomms.phone.app-phone-debug-79:/xml_backup_rules.xml.flat",
+        "source": "com.crewcomms.phone.app-phone-main-81:/xml/backup_rules.xml"
+    }
+]

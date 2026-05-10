@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.crewcomms.phone.app-phone-mergeDebugResources-77:/values-watch-v20/values-watch-v20.xml",
+            "map": [
+                {
+                    "source": "/Users/lasha/.gradle/caches/transforms-4/43f1eb8467092945cf5f51c3ef34a104/transformed/appcompat-1.6.1/res/values-watch-v20/values-watch-v20.xml",
+                    "from": {
+                        "startLines": "2,5,8",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,214,385",
+                        "endLines": "4,7,10",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "209,380,553"
+                    }
+                }
+            ]
+        }
+    ]
+}

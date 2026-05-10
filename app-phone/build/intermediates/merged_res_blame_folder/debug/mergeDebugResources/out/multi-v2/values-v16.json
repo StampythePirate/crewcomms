@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.crewcomms.phone.app-phone-mergeDebugResources-77:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "/Users/lasha/.gradle/caches/transforms-4/43f1eb8467092945cf5f51c3ef34a104/transformed/appcompat-1.6.1/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    }
+                }
+            ]
+        }
+    ]
+}
