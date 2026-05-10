@@ -2,44 +2,55 @@ package com.crewcomms.phone.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import com.crewcomms.phone.ui.components.BrassCard
+import com.crewcomms.phone.ui.components.CrewButton
+import com.crewcomms.phone.ui.components.PirateScaffold
+import com.crewcomms.phone.ui.components.SignalLevel
+import com.crewcomms.phone.ui.components.SignalStatusChip
 import com.crewcomms.phone.ui.theme.CrewCommsPhoneTheme
+import com.crewcomms.phone.ui.theme.CrewSpacing
 
 @Composable
 fun HomeScreen(
     deviceName: String,
+    watchLinked: Boolean,
+    signalLevel: SignalLevel,
+    signalText: String,
     onCreateCrew: () -> Unit,
     onJoinCrew: () -> Unit,
     onOpenLastCrew: () -> Unit,
     onSettings: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+    PirateScaffold(
+        title = "CrewComms",
+        subtitle = "Private nearby crew communication",
     ) {
-        Text("CrewComms", style = MaterialTheme.typography.displaySmall)
-        Text("Captain: $deviceName", style = MaterialTheme.typography.titleMedium)
+        Column(verticalArrangement = Arrangement.spacedBy(CrewSpacing.xs)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(CrewSpacing.xs)) {
+                SignalStatusChip(text = signalText, level = signalLevel)
+                SignalStatusChip(text = "Phone Ready", level = SignalLevel.ONLINE)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(CrewSpacing.xs)) {
+                SignalStatusChip(
+                    text = if (watchLinked) "Watch Linked" else "Watch Not Linked",
+                    level = if (watchLinked) SignalLevel.ONLINE else SignalLevel.IDLE,
+                )
+            }
+        }
 
-        ActionButton(label = "Create Crew", onClick = onCreateCrew)
-        ActionButton(label = "Join Nearby Crew", onClick = onJoinCrew)
-        ActionButton(label = "Open Last Crew", onClick = onOpenLastCrew)
-        ActionButton(label = "Settings", onClick = onSettings)
-    }
-}
+        BrassCard(title = "Captain Command Panel") {
+            CrewButton(label = "Create Crew", onClick = onCreateCrew)
+            CrewButton(label = "Join Nearby Crew", onClick = onJoinCrew)
+            CrewButton(label = "Open Last Channel", onClick = onOpenLastCrew)
+            CrewButton(label = "Settings", onClick = onSettings)
+        }
 
-@Composable
-private fun ActionButton(label: String, onClick: () -> Unit) {
-    Button(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
-        Text(label)
+        Column(verticalArrangement = Arrangement.spacedBy(CrewSpacing.xs)) {
+            SignalStatusChip(text = "Captain: $deviceName", level = SignalLevel.IDLE)
+        }
     }
 }
 
@@ -48,7 +59,10 @@ private fun ActionButton(label: String, onClick: () -> Unit) {
 private fun HomeScreenPreview() {
     CrewCommsPhoneTheme {
         HomeScreen(
-            deviceName = "Captain Vega",
+            deviceName = "Captain Gray",
+            watchLinked = true,
+            signalLevel = SignalLevel.IDLE,
+            signalText = "Signal Idle",
             onCreateCrew = {},
             onJoinCrew = {},
             onOpenLastCrew = {},

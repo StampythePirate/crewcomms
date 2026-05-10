@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:1:1-52:12
-INJECTED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:1:1-52:12
-INJECTED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:1:1-52:12
-INJECTED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:1:1-52:12
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:1:1-57:12
+INJECTED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:1:1-57:12
+INJECTED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:1:1-57:12
+INJECTED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:1:1-57:12
 MERGED from [:core-transport] /Users/lasha/Documents/github/crewcomms/core-transport/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
 MERGED from [:core-database] /Users/lasha/Documents/github/crewcomms/core-database/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.12.0] /Users/lasha/.gradle/caches/transforms-4/0e9b61a8b4499925b11833186d4432e5/transformed/material-1.12.0/AndroidManifest.xml:17:1-24:12
@@ -137,17 +137,37 @@ uses-permission#android.permission.RECORD_AUDIO
 ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:9:5-71
 	android:name
 		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:9:22-68
+uses-permission#android.permission.INTERNET
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:10:5-67
+	android:name
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:10:22-64
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:11:5-76
+	android:name
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:11:22-73
 uses-permission#android.permission.FOREGROUND_SERVICE
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:10:5-77
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:12:5-77
 	android:name
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:10:22-74
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:12:22-74
+uses-permission#android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:13:5-94
+	android:name
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:13:22-91
 uses-permission#android.permission.VIBRATE
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:11:5-66
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:14:5-66
 	android:name
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:11:22-63
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:14:22-63
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:15:5-79
+	android:name
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:15:22-76
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:16:5-76
+	android:name
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:16:22-73
 application
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:13:5-50:19
-INJECTED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:13:5-50:19
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:18:5-55:19
+INJECTED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:18:5-55:19
 MERGED from [com.google.android.material:material:1.12.0] /Users/lasha/.gradle/caches/transforms-4/0e9b61a8b4499925b11833186d4432e5/transformed/material-1.12.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.12.0] /Users/lasha/.gradle/caches/transforms-4/0e9b61a8b4499925b11833186d4432e5/transformed/material-1.12.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-wearable:19.0.0] /Users/lasha/.gradle/caches/transforms-4/cdb55956d29b6e76a8e6f50da530bcce/transformed/play-services-wearable-19.0.0/AndroidManifest.xml:22:5-20
@@ -185,73 +205,73 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/lasha/.gradle/caches
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.13.1] /Users/lasha/.gradle/caches/transforms-4/91fdd702edee142e964c8353a776951d/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:18:9-35
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:23:9-35
 	android:label
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:17:9-34
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:22:9-34
 	android:icon
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:16:9-58
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:21:9-58
 	android:allowBackup
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:15:9-35
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:20:9-35
 	android:theme
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:19:9-53
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:24:9-53
 	android:name
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:14:9-42
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:19:9-42
 activity#com.crewcomms.phone.MainActivity
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:21:9-29:20
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:26:9-34:20
 	android:exported
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:23:13-36
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:28:13-36
 	android:theme
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:24:13-57
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:29:13-57
 	android:name
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:22:13-41
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:27:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:25:13-28:29
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:30:13-33:29
 action#android.intent.action.MAIN
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:26:17-69
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:31:17-69
 	android:name
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:26:25-66
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:31:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:27:17-77
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:32:17-77
 	android:name
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:27:27-74
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:32:27-74
 service#com.crewcomms.phone.service.PhoneWearListenerService
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:31:9-42:19
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:36:9-47:19
 	android:enabled
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:33:13-35
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:38:13-35
 	android:exported
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:34:13-36
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:39:13-36
 	android:name
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:32:13-61
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:37:13-61
 intent-filter#action:name:com.google.android.gms.wearable.BIND_LISTENER
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:35:13-37:29
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:40:13-42:29
 action#com.google.android.gms.wearable.BIND_LISTENER
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:36:17-88
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:41:17-88
 	android:name
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:36:25-85
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:41:25-85
 intent-filter#action:name:com.google.android.gms.wearable.MESSAGE_RECEIVED+data:host:*+data:pathPrefix:/watch_command+data:scheme:wear
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:38:13-41:29
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:43:13-46:29
 action#com.google.android.gms.wearable.MESSAGE_RECEIVED
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:39:17-91
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:44:17-91
 	android:name
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:39:25-88
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:44:25-88
 data
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:40:17-100
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:45:17-100
 	android:host
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:40:45-61
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:45:45-61
 	android:scheme
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:40:23-44
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:45:23-44
 	android:pathPrefix
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:40:62-97
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:45:62-97
 service#com.crewcomms.phone.service.CrewSessionForegroundService
-ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:44:9-48:63
+ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:49:9-53:63
 	android:enabled
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:46:13-35
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:51:13-35
 	android:exported
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:47:13-37
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:52:13-37
 	android:foregroundServiceType
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:48:13-60
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:53:13-60
 	android:name
-		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:45:13-65
+		ADDED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml:50:13-65
 uses-sdk
 INJECTED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/lasha/Documents/github/crewcomms/app-phone/src/main/AndroidManifest.xml

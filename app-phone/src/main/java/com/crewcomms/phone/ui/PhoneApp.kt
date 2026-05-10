@@ -4,16 +4,7 @@ import android.Manifest
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -23,13 +14,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.crewcomms.core.model.ConnectionStatus
+import com.crewcomms.phone.ui.components.SignalLevel
 import com.crewcomms.phone.ui.screens.CreateCrewScreen
 import com.crewcomms.phone.ui.screens.CrewChatScreen
 import com.crewcomms.phone.ui.screens.HomeScreen
@@ -61,24 +52,16 @@ fun PhoneApp(viewModel: PhoneViewModel) {
         launcher.launch(requiredPermissions())
     }
 
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-        ) {
-            PhoneNavHost(navController = navController, viewModel = viewModel, uiState = uiState)
-        }
+    Surface {
+        PhoneNavHost(navController = navController, viewModel = viewModel, uiState = uiState)
     }
 
     if (showPermissionRationale) {
         AlertDialog(
             onDismissRequest = { showPermissionRationale = false },
-            title = { Text("Permission needed") },
+            title = { Text("Permissions needed") },
             text = {
-                Text(
-                    "CrewComms needs nearby, Bluetooth, and notification permissions for local crew signal and watch relay."
-                )
+                Text("CrewComms needs nearby, Bluetooth, and notification permissions for local crew communication.")
             },
             confirmButton = {
                 TextButton(onClick = {
@@ -103,6 +86,9 @@ private fun PhoneNavHost(
         composable(Routes.Home) {
             HomeScreen(
                 deviceName = uiState.settings.displayName,
+                watchLinked = uiState.settings.vibrationRelayToWatch,
+                signalLevel = homeSignalLevel(uiState.status),
+                signalText = homeSignalText(uiState.status),
                 onCreateCrew = { navController.navigate(Routes.Create) },
                 onJoinCrew = { navController.navigate(Routes.Join) },
                 onOpenLastCrew = { navController.navigate(Routes.Chat) },
@@ -160,15 +146,18 @@ private fun PhoneNavHost(
     }
 }
 
-@Composable
-fun CrewTopBar(title: String, action: @Composable (() -> Unit)? = null) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        Text(text = title, style = MaterialTheme.typography.titleLarge)
-        action?.invoke()
-    }
+private fun homeSignalLevel(status: ConnectionStatus): SignalLevel = when (status) {
+    ConnectionStatus.CONNECTED -> SignalLevel.ONLINE
+    ConnectionStatus.CONNECTING, ConnectionStatus.SYNCING, ConnectionStatus.ADVERTISING, ConnectionStatus.DISCOVERING -> SignalLevel.RECONNECTING
+    ConnectionStatus.ERROR -> SignalLevel.LOST
+    ConnectionStatus.DISCONNECTED -> SignalLevel.IDLE
+}
+
+private fun homeSignalText(status: ConnectionStatus): String = when (status) {
+    ConnectionStatus.CONNECTED -> "Signal Online"
+    ConnectionStatus.CONNECTING, ConnectionStatus.SYNCING, ConnectionStatus.ADVERTISING, ConnectionStatus.DISCOVERING -> "Signal Tracking"
+    ConnectionStatus.ERROR -> "Signal Lost"
+    ConnectionStatus.DISCONNECTED -> "Signal Idle"
 }
 
 private fun requiredPermissions(): Array<String> {

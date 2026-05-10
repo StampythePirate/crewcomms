@@ -99,11 +99,15 @@ class NearbyConnectionsTransport @Inject constructor(
         val roomId = currentRoom?.id
         if (roomId != null && message.roomId != roomId) return
 
-        val payload = CrewJson.encode(TransportPayload.CrewMessagePayload(message))
-            .toByteArray(StandardCharsets.UTF_8)
+        val wrapped = CrewJson.encode(
+            TransportPayload.CrewMessagePayload(
+                message = message,
+                sourceId = DEVICE_NAME_PREFIX,
+            )
+        ).toByteArray(StandardCharsets.UTF_8)
 
         connectedEndpoints.forEach { endpointId ->
-            connectionsClient.sendPayload(endpointId, Payload.fromBytes(payload))
+            connectionsClient.sendPayload(endpointId, Payload.fromBytes(wrapped))
         }
     }
 

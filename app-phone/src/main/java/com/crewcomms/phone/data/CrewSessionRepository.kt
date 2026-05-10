@@ -19,7 +19,9 @@ import javax.inject.Inject
 import javax.inject.Named
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -32,6 +34,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @ViewModelScoped
 class CrewSessionRepository @Inject constructor(
     private val historyRepository: HistoryRepository,
@@ -39,7 +42,7 @@ class CrewSessionRepository @Inject constructor(
     private val wearSyncManager: WearSyncManager,
     private val sessionServiceController: SessionServiceController,
     @Named("mock") private val mockTransport: CrewTransport,
-    @Named("nearby") private val nearbyTransport: CrewTransport,
+    @Named("local") private val localTransport: CrewTransport,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -48,7 +51,7 @@ class CrewSessionRepository @Inject constructor(
     private val _members = MutableStateFlow<List<CrewMember>>(emptyList())
     private val _connectionStatus = MutableStateFlow(ConnectionStatus.DISCONNECTED)
 
-    private var currentTransport: CrewTransport = mockTransport
+    private var currentTransport: CrewTransport = localTransport
     private var transportObserverJob: Job? = null
 
     val currentRoom: StateFlow<CrewRoom?> = _currentRoom.asStateFlow()
@@ -72,7 +75,7 @@ class CrewSessionRepository @Inject constructor(
     init {
         scope.launch {
             settings.collectLatest { prefs ->
-                val nextTransport = if (prefs.useMockTransport) mockTransport else nearbyTransport
+                val nextTransport = if (prefs.useMockTransport) mockTransport else localTransport
                 if (nextTransport !== currentTransport) {
                     currentTransport.stop()
                     currentTransport = nextTransport
@@ -187,14 +190,16 @@ class CrewSessionRepository @Inject constructor(
         _members.value = listOf(self)
         historyRepository.saveMember(self)
         addSystemMessage("Crew channel ${room.name} opened")
-        currentTransport.startAdvertising(room)
+        runCatching { withContext(Dispatchers.IO) { currentTransport.startAdvertising(room) } }
+            .onFailure { addSystemMessage("Signal error: ${it.message ?: "unable to advertise"}") }
         sessionServiceController.start()
         syncWatchState()
     }
 
     suspend fun discoverCrews() {
         _nearbyCrews.value = emptyList()
-        currentTransport.startDiscovery()
+        runCatching { withContext(Dispatchers.IO) { currentTransport.startDiscovery() } }
+            .onFailure { addSystemMessage("Signal error: ${it.message ?: "unable to discover crews"}") }
     }
 
     suspend fun joinCrew(crew: NearbyCrew, pin: String?) {
@@ -215,7 +220,8 @@ class CrewSessionRepository @Inject constructor(
             pinRequired = crew.pinRequired,
             pinCode = pin,
         )
-        currentTransport.connectToCrew(crew.endpointId, pin)
+        runCatching { withContext(Dispatchers.IO) { currentTransport.connectToCrew(crew.endpointId, pin) } }
+            .onFailure { addSystemMessage("Signal error: ${it.message ?: "unable to connect"}") }
         addSystemMessage("Joined ${crew.roomName}")
         sessionServiceController.start()
         syncWatchState()
@@ -235,7 +241,8 @@ class CrewSessionRepository @Inject constructor(
         )
 
         historyRepository.saveMessage(message)
-        currentTransport.sendMessage(message)
+        runCatching { withContext(Dispatchers.IO) { currentTransport.sendMessage(message) } }
+            .onFailure { addSystemMessage("Signal error: ${it.message ?: "unable to send message"}") }
         syncWatchState()
     }
 
@@ -261,7 +268,8 @@ class CrewSessionRepository @Inject constructor(
         )
 
         historyRepository.saveMessage(message)
-        currentTransport.sendMessage(message)
+        runCatching { withContext(Dispatchers.IO) { currentTransport.sendMessage(message) } }
+            .onFailure { addSystemMessage("Signal error: ${it.message ?: "unable to send command"}") }
         syncWatchState()
     }
 
@@ -276,7 +284,8 @@ class CrewSessionRepository @Inject constructor(
             type = MessageType.VOICE_NOTE_PLACEHOLDER,
         )
         historyRepository.saveMessage(message)
-        currentTransport.sendMessage(message)
+        runCatching { withContext(Dispatchers.IO) { currentTransport.sendMessage(message) } }
+            .onFailure { addSystemMessage("Signal error: ${it.message ?: "unable to send voice placeholder"}") }
     }
 
     suspend fun clearHistory() {
@@ -284,7 +293,7 @@ class CrewSessionRepository @Inject constructor(
     }
 
     suspend fun leaveCrew() {
-        currentTransport.stop()
+        runCatching { withContext(Dispatchers.IO) { currentTransport.stop() } }
         _currentRoom.value = null
         _members.value = emptyList()
         _nearbyCrews.value = emptyList()

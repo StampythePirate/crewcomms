@@ -5,5 +5,5 @@ data class PhoneSettings(
     val vibrationRelayToWatch: Boolean = true,
     val keepScreenAwake: Boolean = false,
     val autoReconnect: Boolean = true,
-    val useMockTransport: Boolean = true,
+    val useMockTransport: Boolean = false,
 )

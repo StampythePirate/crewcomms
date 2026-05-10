@@ -7,8 +7,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal sealed class TransportPayload {
     @Serializable
-    data class RoomAnnouncement(val room: CrewRoom) : TransportPayload()
+    data class RoomAnnouncement(
+        val room: CrewRoom,
+        val sourceId: String,
+    ) : TransportPayload()
 
     @Serializable
-    data class CrewMessagePayload(val message: CrewMessage) : TransportPayload()
+    data class CrewMessagePayload(
+        val message: CrewMessage,
+        val sourceId: String,
+    ) : TransportPayload()
 }

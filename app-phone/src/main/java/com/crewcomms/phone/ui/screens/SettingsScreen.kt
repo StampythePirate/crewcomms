@@ -1,12 +1,8 @@
 package com.crewcomms.phone.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
@@ -18,8 +14,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.crewcomms.phone.data.PhoneSettings
+import com.crewcomms.phone.ui.components.BrassCard
+import com.crewcomms.phone.ui.components.CrewButton
+import com.crewcomms.phone.ui.components.DangerCrewButton
+import com.crewcomms.phone.ui.components.PirateScaffold
 
 @Composable
 fun SettingsScreen(
@@ -34,34 +33,29 @@ fun SettingsScreen(
 ) {
     var displayName by remember(settings.displayName) { mutableStateOf(settings.displayName) }
 
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+    PirateScaffold(
+        title = "Settings",
+        subtitle = "Captain device controls",
     ) {
-        Text("Settings", style = MaterialTheme.typography.headlineSmall)
+        BrassCard(title = "Captain Controls") {
+            OutlinedTextField(
+                value = displayName,
+                onValueChange = {
+                    displayName = it
+                    onDisplayNameChanged(it)
+                },
+                label = { Text("Captain Name") },
+                modifier = Modifier.fillMaxWidth(),
+            )
 
-        OutlinedTextField(
-            value = displayName,
-            onValueChange = {
-                displayName = it
-                onDisplayNameChanged(it)
-            },
-            label = { Text("Display name") },
-            modifier = Modifier.fillMaxWidth(),
-        )
-
-        ToggleRow("Enable vibration relay to watch", settings.vibrationRelayToWatch, onVibrationRelayChanged)
-        ToggleRow("Keep screen awake during active crew", settings.keepScreenAwake, onKeepAwakeChanged)
-        ToggleRow("Auto-reconnect", settings.autoReconnect, onAutoReconnectChanged)
-        ToggleRow("Use mock transport mode", settings.useMockTransport, onMockModeChanged)
-
-        Button(onClick = onClearHistory, modifier = Modifier.fillMaxWidth()) {
-            Text("Clear message history")
+            ToggleRow("Vibration Alerts", settings.vibrationRelayToWatch, onVibrationRelayChanged)
+            ToggleRow("Auto-Reconnect", settings.autoReconnect, onAutoReconnectChanged)
+            ToggleRow("Mock Transport Mode", settings.useMockTransport, onMockModeChanged)
+            ToggleRow("Keep Channel Active", settings.keepScreenAwake, onKeepAwakeChanged)
         }
 
-        Button(onClick = onBack, modifier = Modifier.fillMaxWidth()) {
-            Text("Back")
-        }
+        DangerCrewButton(label = "Clear Logs", onClick = onClearHistory)
+        CrewButton(label = "Back", onClick = onBack)
     }
 }
 
@@ -69,10 +63,10 @@ fun SettingsScreen(
 private fun ToggleRow(title: String, checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(title, modifier = Modifier.weight(1f))
+        Text(title, style = MaterialTheme.typography.bodyLarge)
         Switch(checked = checked, onCheckedChange = onCheckedChange)
     }
 }

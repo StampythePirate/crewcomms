@@ -6,7 +6,8 @@ Architecture (v1):
 - Watch app communicates only with paired phone via Wear OS Data Layer.
 - Phone app communicates with nearby phones via `CrewTransport`.
 - `MockTransport` is fully implemented for local UI/dev testing.
-- `NearbyConnectionsTransport` is implemented as v1 skeleton with connection + payload flow and TODO markers for stronger room metadata/PIN handshake.
+- `LocalLanTransport` is fully implemented for serverless local peer communication over the same LAN/Wi-Fi network.
+- `NearbyConnectionsTransport` remains in the codebase as optional/swap-ready implementation.
 
 ## Modules
 
@@ -28,7 +29,8 @@ Architecture (v1):
 - DataStore
 - Hilt
 - Google Play Services Wearable Data Layer
-- Google Nearby Connections (transport layer)
+- Local LAN UDP sockets (default real transport)
+- Google Nearby Connections (optional, swap-ready)
 
 ## Open In Android Studio
 
@@ -86,16 +88,17 @@ Notes:
 
 This mode is best for emulator-only development.
 
-## Test Nearby Mode With Two Android Phones
+## Test Local Free Mode (No Server) With Two Android Phones
 
 1. Install `app-phone` on both phones.
-2. On host phone, disable mock mode and tap `Create Crew`.
-3. On second phone, disable mock mode and tap `Join Nearby Crew`, then `Start Scan`.
+2. Ensure both phones are on the same Wi-Fi/LAN and disable mock mode.
+3. On host phone, tap `Create Crew`.
+4. On second phone, tap `Join Nearby Crew`, then `Scan the Horizon`.
 4. Join discovered crew.
 5. Exchange text and quick commands.
 
 Important:
-- Nearby runtime behavior depends on device model, Android version, and granted permissions.
+- Local discovery and messaging depend on devices sharing the same network segment and broadcast being allowed.
 - Keep both apps in foreground for v1 testing.
 
 ## Permissions Summary
@@ -117,15 +120,15 @@ Watch app requests:
 
 ## Current Limitations
 
-- Nearby room metadata is basic in `NearbyConnectionsTransport`.
+- LAN transport currently uses UDP broadcast and simple room filtering (good for local crews, not hardened internet routing).
 - PIN protection is modeled in domain state but full cryptographic PIN handshake is TODO.
 - Voice is UI placeholder only (no live audio streaming yet).
 - Foreground service currently shows active session notification only; it does not yet host full resilient background networking logic.
 - No backend/cloud/account system by design.
 
-## What Remains To Finish Full Nearby Device-to-Device
+## What Remains To Finish Optional Google Nearby Mode
 
-To move from the current skeleton to production-grade Nearby:
+To move from the existing Nearby skeleton to production-grade Google Nearby:
 
 1. Advertise/discovery metadata handshake:
 - exchange room metadata (`roomId`, `roomName`, `pinRequired`) in explicit announcement payloads.

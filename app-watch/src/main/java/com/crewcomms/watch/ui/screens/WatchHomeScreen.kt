@@ -7,13 +7,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.tooling.preview.devices.WearDevices
-import androidx.compose.ui.tooling.preview.Preview
+import com.crewcomms.watch.ui.components.WatchCrewButton
+import com.crewcomms.watch.ui.components.WatchCrewButtonStyle
+import com.crewcomms.watch.ui.components.WatchStatusDot
 import com.crewcomms.watch.ui.theme.CrewCommsWatchTheme
+import com.crewcomms.watch.ui.theme.WatchAlertRed
+import com.crewcomms.watch.ui.theme.WatchSignalGreen
 
 @Composable
 fun WatchHomeScreen(
@@ -25,22 +29,31 @@ fun WatchHomeScreen(
 ) {
     Column(
         modifier = Modifier.fillMaxSize().padding(10.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text("CrewComms", style = MaterialTheme.typography.title2)
-        Text("Phone: ${statusLabel(status)}", style = MaterialTheme.typography.caption1)
-        Text("Room: ${roomName ?: "No active room"}", style = MaterialTheme.typography.caption1)
+        Text(roomName ?: "No active room", style = MaterialTheme.typography.caption1)
 
-        Button(onClick = onOpenControls, modifier = Modifier.fillMaxWidth()) { Text("Open Crew Controls") }
-        Button(onClick = onOpenMessages, modifier = Modifier.fillMaxWidth()) { Text("Messages") }
-        Button(onClick = onOpenPtt, modifier = Modifier.fillMaxWidth()) { Text("Push To Talk") }
+        WatchStatusDot(
+            label = statusLabel(status),
+            color = if (status == "CONNECTED") WatchSignalGreen else WatchAlertRed,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        WatchCrewButton(
+            label = "OPEN CHANNEL",
+            onClick = onOpenControls,
+            style = WatchCrewButtonStyle.PRIMARY,
+        )
+        WatchCrewButton(label = "MESSAGES", onClick = onOpenMessages, style = WatchCrewButtonStyle.WAIT)
+        WatchCrewButton(label = "VOICE", onClick = onOpenPtt, style = WatchCrewButtonStyle.WAIT)
     }
 }
 
 private fun statusLabel(status: String): String = when (status) {
-    "CONNECTED" -> "Connected to phone"
-    "SYNCING", "CONNECTING", "DISCOVERING", "ADVERTISING" -> "Syncing"
-    else -> "Disconnected"
+    "CONNECTED" -> "ONLINE"
+    "SYNCING", "CONNECTING", "DISCOVERING", "ADVERTISING" -> "NO SIGNAL"
+    else -> "PHONE LOST"
 }
 
 @Preview(device = WearDevices.SMALL_ROUND, showSystemUi = true)
@@ -48,7 +61,7 @@ private fun statusLabel(status: String): String = when (status) {
 private fun WatchHomePreview() {
     CrewCommsWatchTheme {
         WatchHomeScreen(
-            roomName = "Alpha Team",
+            roomName = "Captain's Channel",
             status = "CONNECTED",
             onOpenControls = {},
             onOpenMessages = {},

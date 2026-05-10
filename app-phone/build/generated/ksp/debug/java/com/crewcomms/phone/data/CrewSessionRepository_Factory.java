@@ -35,25 +35,25 @@ public final class CrewSessionRepository_Factory implements Factory<CrewSessionR
 
   private final Provider<CrewTransport> mockTransportProvider;
 
-  private final Provider<CrewTransport> nearbyTransportProvider;
+  private final Provider<CrewTransport> localTransportProvider;
 
   public CrewSessionRepository_Factory(Provider<HistoryRepository> historyRepositoryProvider,
       Provider<PhonePreferencesStore> preferencesStoreProvider,
       Provider<WearSyncManager> wearSyncManagerProvider,
       Provider<SessionServiceController> sessionServiceControllerProvider,
       Provider<CrewTransport> mockTransportProvider,
-      Provider<CrewTransport> nearbyTransportProvider) {
+      Provider<CrewTransport> localTransportProvider) {
     this.historyRepositoryProvider = historyRepositoryProvider;
     this.preferencesStoreProvider = preferencesStoreProvider;
     this.wearSyncManagerProvider = wearSyncManagerProvider;
     this.sessionServiceControllerProvider = sessionServiceControllerProvider;
     this.mockTransportProvider = mockTransportProvider;
-    this.nearbyTransportProvider = nearbyTransportProvider;
+    this.localTransportProvider = localTransportProvider;
   }
 
   @Override
   public CrewSessionRepository get() {
-    return newInstance(historyRepositoryProvider.get(), preferencesStoreProvider.get(), wearSyncManagerProvider.get(), sessionServiceControllerProvider.get(), mockTransportProvider.get(), nearbyTransportProvider.get());
+    return newInstance(historyRepositoryProvider.get(), preferencesStoreProvider.get(), wearSyncManagerProvider.get(), sessionServiceControllerProvider.get(), mockTransportProvider.get(), localTransportProvider.get());
   }
 
   public static CrewSessionRepository_Factory create(
@@ -62,14 +62,14 @@ public final class CrewSessionRepository_Factory implements Factory<CrewSessionR
       Provider<WearSyncManager> wearSyncManagerProvider,
       Provider<SessionServiceController> sessionServiceControllerProvider,
       Provider<CrewTransport> mockTransportProvider,
-      Provider<CrewTransport> nearbyTransportProvider) {
-    return new CrewSessionRepository_Factory(historyRepositoryProvider, preferencesStoreProvider, wearSyncManagerProvider, sessionServiceControllerProvider, mockTransportProvider, nearbyTransportProvider);
+      Provider<CrewTransport> localTransportProvider) {
+    return new CrewSessionRepository_Factory(historyRepositoryProvider, preferencesStoreProvider, wearSyncManagerProvider, sessionServiceControllerProvider, mockTransportProvider, localTransportProvider);
   }
 
   public static CrewSessionRepository newInstance(HistoryRepository historyRepository,
       PhonePreferencesStore preferencesStore, WearSyncManager wearSyncManager,
       SessionServiceController sessionServiceController, CrewTransport mockTransport,
-      CrewTransport nearbyTransport) {
-    return new CrewSessionRepository(historyRepository, preferencesStore, wearSyncManager, sessionServiceController, mockTransport, nearbyTransport);
+      CrewTransport localTransport) {
+    return new CrewSessionRepository(historyRepository, preferencesStore, wearSyncManager, sessionServiceController, mockTransport, localTransport);
   }
 }

@@ -19,4 +19,9 @@ object TransportModule {
     @Singleton
     @Named("nearby")
     fun provideNearbyTransport(transport: NearbyConnectionsTransport): CrewTransport = transport
+
+    @Provides
+    @Singleton
+    @Named("local")
+    fun provideLocalTransport(transport: LocalLanTransport): CrewTransport = transport
 }

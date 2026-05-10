@@ -14,7 +14,9 @@ class SessionServiceController @Inject constructor(
 ) {
     fun start() {
         val intent = Intent(context, CrewSessionForegroundService::class.java)
-        ContextCompat.startForegroundService(context, intent)
+        runCatching {
+            ContextCompat.startForegroundService(context, intent)
+        }
     }
 
     fun stop() {

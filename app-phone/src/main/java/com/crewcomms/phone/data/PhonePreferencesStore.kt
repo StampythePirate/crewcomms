@@ -25,7 +25,7 @@ class PhonePreferencesStore @Inject constructor(
             vibrationRelayToWatch = prefs[VIBRATION_RELAY] ?: true,
             keepScreenAwake = prefs[KEEP_SCREEN_AWAKE] ?: false,
             autoReconnect = prefs[AUTO_RECONNECT] ?: true,
-            useMockTransport = prefs[USE_MOCK] ?: true,
+            useMockTransport = prefs[USE_MOCK] ?: false,
         )
     }
 
