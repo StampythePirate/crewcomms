@@ -3,10 +3,13 @@ package com.crewcomms.phone.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.PauseCircle
+import androidx.compose.material.icons.outlined.RecordVoiceOver
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -16,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.crewcomms.core.model.ConnectionStatus
 import com.crewcomms.core.model.QuickCommand
 import com.crewcomms.phone.ui.PhoneUiState
@@ -43,14 +45,14 @@ fun CrewChatScreen(
     var confirmEmergency by remember { mutableStateOf(false) }
 
     val signalLevel = when (state.status) {
-        ConnectionStatus.CONNECTED -> SignalLevel.ONLINE
-        ConnectionStatus.CONNECTING, ConnectionStatus.SYNCING, ConnectionStatus.DISCOVERING, ConnectionStatus.ADVERTISING -> SignalLevel.RECONNECTING
+        ConnectionStatus.CONNECTED, ConnectionStatus.ADVERTISING -> SignalLevel.ONLINE
+        ConnectionStatus.CONNECTING, ConnectionStatus.SYNCING, ConnectionStatus.DISCOVERING -> SignalLevel.RECONNECTING
         ConnectionStatus.ERROR, ConnectionStatus.DISCONNECTED -> SignalLevel.LOST
     }
 
     val signalText = when (state.status) {
-        ConnectionStatus.CONNECTED -> "Signal Online"
-        ConnectionStatus.CONNECTING, ConnectionStatus.SYNCING, ConnectionStatus.DISCOVERING, ConnectionStatus.ADVERTISING -> "Reconnecting"
+        ConnectionStatus.CONNECTED, ConnectionStatus.ADVERTISING -> "Signal Online"
+        ConnectionStatus.CONNECTING, ConnectionStatus.SYNCING, ConnectionStatus.DISCOVERING -> "Reconnecting"
         ConnectionStatus.ERROR, ConnectionStatus.DISCONNECTED -> "Signal Lost"
     }
 
@@ -65,15 +67,12 @@ fun CrewChatScreen(
         )
 
         BrassCard(title = "Captain's Log") {
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth().height(280.dp),
+            Column(
+                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(CrewSpacing.xs),
             ) {
-                items(state.messages, key = { it.id }) { message ->
-                    CrewMessageBubble(
-                        message = message,
-                        isOwn = message.senderId == "self",
-                    )
+                state.messages.takeLast(40).forEach { message ->
+                    CrewMessageBubble(message = message, isOwn = message.senderId == "self")
                 }
             }
 
@@ -94,12 +93,12 @@ fun CrewChatScreen(
         }
 
         BrassCard(title = "Quick Commands") {
-            CrewButton(label = "Signal Ping", onClick = { onQuickCommand(QuickCommand.PING) })
+            CrewButton(label = "Signal Ping", onClick = { onQuickCommand(QuickCommand.PING) }, leadingIcon = Icons.Outlined.Notifications)
             DangerCrewButton(label = "Emergency Flare") { confirmEmergency = true }
-            CrewButton(label = "Ready on Deck", onClick = { onQuickCommand(QuickCommand.READY) })
-            CrewButton(label = "Rally Here", onClick = { onQuickCommand(QuickCommand.COME_HERE) })
-            CrewButton(label = "Stand By", onClick = { onQuickCommand(QuickCommand.WAIT) })
-            CrewButton(label = "Hold to Speak", onClick = onVoicePlaceholder)
+            CrewButton(label = "Ready on Deck", onClick = { onQuickCommand(QuickCommand.READY) }, leadingIcon = Icons.Outlined.CheckCircle)
+            CrewButton(label = "Rally Here", onClick = { onQuickCommand(QuickCommand.COME_HERE) }, leadingIcon = Icons.Outlined.LocationOn)
+            CrewButton(label = "Stand By", onClick = { onQuickCommand(QuickCommand.WAIT) }, leadingIcon = Icons.Outlined.PauseCircle)
+            CrewButton(label = "Hold to Speak", onClick = onVoicePlaceholder, leadingIcon = Icons.Outlined.RecordVoiceOver)
         }
 
         CrewButton(label = "Back", onClick = onBack)

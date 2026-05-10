@@ -1,10 +1,14 @@
 package com.crewcomms.phone.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Campaign
+import androidx.compose.material.icons.outlined.KeyboardReturn
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
@@ -35,7 +39,7 @@ fun CreateCrewScreen(
 
     PirateScaffold(
         title = "Name Your Crew",
-        subtitle = "Set channel visibility before you raise the signal.",
+        subtitle = "Set your channel course before you raise the signal beacon.",
     ) {
         BrassCard(title = "Channel Setup") {
             OutlinedTextField(
@@ -52,6 +56,10 @@ fun CreateCrewScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(if (pinProtectedCove) "PIN-Protected Cove" else "Open Waters")
+                androidx.compose.material3.Icon(
+                    imageVector = if (pinProtectedCove) Icons.Outlined.Lock else Icons.Outlined.Public,
+                    contentDescription = null,
+                )
                 Switch(checked = pinProtectedCove, onCheckedChange = { pinProtectedCove = it })
             }
 
@@ -67,16 +75,16 @@ fun CreateCrewScreen(
 
             CrewButton(label = "Raise the Signal", onClick = {
                 onStartCrew(crewName, pinProtectedCove, pin.ifBlank { null })
-            }, shimmer = true)
-            CrewButton(label = "Back", onClick = onBack)
+            }, shimmer = true, leadingIcon = Icons.Outlined.Campaign)
+            CrewButton(label = "Back", onClick = onBack, leadingIcon = Icons.Outlined.KeyboardReturn)
         }
 
         BrassCard(title = "Crew Members") {
             if (members.isEmpty()) {
                 Text("No crew joined yet.")
             } else {
-                LazyColumn(verticalArrangement = Arrangement.spacedBy(CrewSpacing.xs)) {
-                    items(members) { member ->
+                Column(verticalArrangement = Arrangement.spacedBy(CrewSpacing.xs)) {
+                    members.forEach { member ->
                         Text("• ${member.displayName}")
                     }
                 }

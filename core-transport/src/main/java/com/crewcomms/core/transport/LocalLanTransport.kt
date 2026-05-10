@@ -51,7 +51,7 @@ class LocalLanTransport @Inject constructor() : CrewTransport {
     override suspend fun startAdvertising(room: CrewRoom) {
         currentRoom = room
         ensureSocket()
-        _status.value = ConnectionStatus.ADVERTISING
+        _status.value = ConnectionStatus.CONNECTED
         startRoomAnnouncements(room)
     }
 

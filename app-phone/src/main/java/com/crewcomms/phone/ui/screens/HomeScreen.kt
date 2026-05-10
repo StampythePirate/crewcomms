@@ -3,6 +3,11 @@ package com.crewcomms.phone.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Groups
+import androidx.compose.material.icons.outlined.Hub
+import androidx.compose.material.icons.outlined.Map
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.crewcomms.phone.ui.components.BrassCard
@@ -26,7 +31,7 @@ fun HomeScreen(
 ) {
     PirateScaffold(
         title = "CrewComms",
-        subtitle = "Private nearby crew communication",
+        subtitle = "Black Tide Command | Private nearby crew communication",
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(CrewSpacing.xs)) {
             Row(horizontalArrangement = Arrangement.spacedBy(CrewSpacing.xs)) {
@@ -42,10 +47,10 @@ fun HomeScreen(
         }
 
         BrassCard(title = "Captain Command Panel") {
-            CrewButton(label = "Create Crew", onClick = onCreateCrew)
-            CrewButton(label = "Join Nearby Crew", onClick = onJoinCrew)
-            CrewButton(label = "Open Last Channel", onClick = onOpenLastCrew)
-            CrewButton(label = "Settings", onClick = onSettings)
+            CrewButton(label = "Create Crew", onClick = onCreateCrew, leadingIcon = Icons.Outlined.Hub)
+            CrewButton(label = "Join Nearby Crew", onClick = onJoinCrew, leadingIcon = Icons.Outlined.Map)
+            CrewButton(label = "Open Last Channel", onClick = onOpenLastCrew, leadingIcon = Icons.Outlined.Groups)
+            CrewButton(label = "Settings", onClick = onSettings, leadingIcon = Icons.Outlined.Settings)
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(CrewSpacing.xs)) {

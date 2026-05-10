@@ -71,35 +71,51 @@ class PhoneViewModel @Inject constructor(
     }
 
     fun createCrew(name: String, pinRequired: Boolean, pin: String?) {
-        viewModelScope.launch { sessionRepository.createCrew(name, pinRequired, pin) }
+        viewModelScope.launch {
+            runCatching { sessionRepository.createCrew(name, pinRequired, pin) }
+        }
     }
 
     fun discoverNearbyCrews() {
-        viewModelScope.launch { sessionRepository.discoverCrews() }
+        viewModelScope.launch {
+            runCatching { sessionRepository.discoverCrews() }
+        }
     }
 
     fun joinCrew(crew: NearbyCrew, pin: String?) {
-        viewModelScope.launch { sessionRepository.joinCrew(crew, pin) }
+        viewModelScope.launch {
+            runCatching { sessionRepository.joinCrew(crew, pin) }
+        }
     }
 
     fun sendMessage(text: String) {
-        viewModelScope.launch { sessionRepository.sendTextMessage(text) }
+        viewModelScope.launch {
+            runCatching { sessionRepository.sendTextMessage(text) }
+        }
     }
 
     fun sendQuickCommand(command: QuickCommand) {
-        viewModelScope.launch { sessionRepository.sendQuickCommand(command) }
+        viewModelScope.launch {
+            runCatching { sessionRepository.sendQuickCommand(command) }
+        }
     }
 
     fun sendVoicePlaceholder() {
-        viewModelScope.launch { sessionRepository.sendVoicePlaceholder() }
+        viewModelScope.launch {
+            runCatching { sessionRepository.sendVoicePlaceholder() }
+        }
     }
 
     fun clearHistory() {
-        viewModelScope.launch { sessionRepository.clearHistory() }
+        viewModelScope.launch {
+            runCatching { sessionRepository.clearHistory() }
+        }
     }
 
     fun leaveCrew() {
-        viewModelScope.launch { sessionRepository.leaveCrew() }
+        viewModelScope.launch {
+            runCatching { sessionRepository.leaveCrew() }
+        }
     }
 
     fun updateDisplayName(name: String) {

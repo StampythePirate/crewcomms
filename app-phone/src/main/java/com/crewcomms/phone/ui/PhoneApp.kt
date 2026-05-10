@@ -147,15 +147,15 @@ private fun PhoneNavHost(
 }
 
 private fun homeSignalLevel(status: ConnectionStatus): SignalLevel = when (status) {
-    ConnectionStatus.CONNECTED -> SignalLevel.ONLINE
-    ConnectionStatus.CONNECTING, ConnectionStatus.SYNCING, ConnectionStatus.ADVERTISING, ConnectionStatus.DISCOVERING -> SignalLevel.RECONNECTING
+    ConnectionStatus.CONNECTED, ConnectionStatus.ADVERTISING -> SignalLevel.ONLINE
+    ConnectionStatus.CONNECTING, ConnectionStatus.SYNCING, ConnectionStatus.DISCOVERING -> SignalLevel.RECONNECTING
     ConnectionStatus.ERROR -> SignalLevel.LOST
     ConnectionStatus.DISCONNECTED -> SignalLevel.IDLE
 }
 
 private fun homeSignalText(status: ConnectionStatus): String = when (status) {
-    ConnectionStatus.CONNECTED -> "Signal Online"
-    ConnectionStatus.CONNECTING, ConnectionStatus.SYNCING, ConnectionStatus.ADVERTISING, ConnectionStatus.DISCOVERING -> "Signal Tracking"
+    ConnectionStatus.CONNECTED, ConnectionStatus.ADVERTISING -> "Signal Online"
+    ConnectionStatus.CONNECTING, ConnectionStatus.SYNCING, ConnectionStatus.DISCOVERING -> "Signal Tracking"
     ConnectionStatus.ERROR -> "Signal Lost"
     ConnectionStatus.DISCONNECTED -> "Signal Idle"
 }

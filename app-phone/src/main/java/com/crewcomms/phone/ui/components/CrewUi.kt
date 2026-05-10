@@ -16,7 +16,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -40,6 +43,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -78,6 +82,9 @@ fun PirateScaffold(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .statusBarsPadding()
+                .navigationBarsPadding()
+                .imePadding()
                 .verticalScroll(rememberScrollState())
                 .padding(CrewSpacing.lg),
             verticalArrangement = Arrangement.spacedBy(CrewSpacing.md),
@@ -178,6 +185,7 @@ fun CrewButton(
     label: String,
     onClick: () -> Unit,
     shimmer: Boolean = false,
+    leadingIcon: ImageVector? = null,
 ) {
     val glow = if (shimmer) {
         rememberInfiniteTransition(label = "raise-signal").animateFloat(
@@ -203,7 +211,10 @@ fun CrewButton(
         ),
         border = androidx.compose.foundation.BorderStroke(1.dp, BrassHighlight.copy(alpha = 0.8f)),
     ) {
-        Text(label, fontWeight = FontWeight.Bold)
+        if (leadingIcon != null) {
+            Icon(leadingIcon, contentDescription = null)
+        }
+        Text(label.uppercase(), fontWeight = FontWeight.Bold)
     }
 }
 

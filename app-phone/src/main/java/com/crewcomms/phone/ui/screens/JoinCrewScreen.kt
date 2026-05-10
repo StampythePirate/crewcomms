@@ -1,11 +1,12 @@
 package com.crewcomms.phone.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Explore
+import androidx.compose.material.icons.outlined.KeyboardReturn
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.RadioButtonChecked
 import androidx.compose.material3.Icon
@@ -40,7 +41,7 @@ fun JoinCrewScreen(
 
     PirateScaffold(
         title = "Nearby Crews",
-        subtitle = "Scan local waters and join a captain's channel.",
+        subtitle = "Scan the horizon and board a captain's channel.",
     ) {
         SignalStatusChip(
             text = when (status) {
@@ -56,8 +57,8 @@ fun JoinCrewScreen(
             },
         )
 
-        CrewButton(label = "Scan the Horizon", onClick = onScan)
-        CrewButton(label = "Back", onClick = onBack)
+        CrewButton(label = "Scan the Horizon", onClick = onScan, leadingIcon = Icons.Outlined.Explore)
+        CrewButton(label = "Back", onClick = onBack, leadingIcon = Icons.Outlined.KeyboardReturn)
 
         if (status == ConnectionStatus.DISCOVERING) {
             CompassLoadingIndicator()
@@ -69,8 +70,8 @@ fun JoinCrewScreen(
             }
         }
 
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(CrewSpacing.sm)) {
-            items(crews, key = { it.endpointId }) { crew ->
+        Column(verticalArrangement = Arrangement.spacedBy(CrewSpacing.sm)) {
+            crews.forEach { crew ->
                 BrassCard(title = "Crew Signal") {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
